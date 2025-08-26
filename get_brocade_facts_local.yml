@@ -1,0 +1,26 @@
+---
+- name: Obtener facts switch Brocade (local)
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - brocade.fos
+
+  vars:
+    credential:
+      fos_ip_addr: "{{ fos_ip_addr }}"
+      fos_user_name: "{{ fos_user_name }}"
+      fos_password: "{{ fos_password }}"
+      https: false
+      validate_certs: false
+
+  tasks:
+    - name: Obtener facts del switch Brocade
+      brocade_facts:
+        credential: "{{ credential }}"
+        vfid: -1
+      register: san_facts
+
+    - name: Mostrar facts
+      debug:
+        var: san_facts
