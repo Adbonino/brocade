@@ -19,6 +19,7 @@
       brocade_facts:
         credential: "{{ credential }}"
         vfid: -1
+        gather_subset: all
       register: san_facts
 
     - name: Mostrar facts
