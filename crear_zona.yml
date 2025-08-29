@@ -1,0 +1,21 @@
+- name: Crear una zona en Brocade G720
+  hosts: brocade_switches
+  gather_facts: no
+  vars:
+    zona_nombre: "MiZona"
+    zona_miembros:
+      - alias1
+      - alias2
+      - wwn1
+      - wwn2
+
+  tasks:
+    - name: Crear zona con miembros
+      raw: >
+        zonecreate {{ zona_nombre }},{{ zona_miembros | join(';') }}
+      register: crear_zona_output
+      ignore_errors: yes
+
+    - name: Mostrar resultado
+      debug:
+        var: crear_zona_output.stdout
