@@ -30,12 +30,13 @@
              | map(attribute='item')
              | list }}
 
-    - name: Guardar aliases fallidos en un archivo
+    - name: Guardar aliases fallidos en archivo local
       copy:
-        dest: "./aliases_fallidos.yml"
+        dest: "/ruta/en/controlador/aliases_fallidos.yml"
         content: |
           aliases:
           {% for alias in aliases_fallidos %}
             - name: {{ alias.name }}
               wwn: {{ alias.wwn }}
           {% endfor %}
+      delegate_to: localhost
