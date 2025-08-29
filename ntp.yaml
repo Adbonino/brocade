@@ -1,15 +1,18 @@
-gather_facts: False
-
+---
+- name: Configuracion servicio NTP (local)
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - brocade.fos
   vars:
     credential:
-      fos_ip_addr: "{{fos_ip_addr}}"
+      fos_ip_addr: 10.82.1.90
       fos_user_name: admin
-      fos_password: xxxx
+      fos_password: passw0rd
       https: False
-
   tasks:
-
-  - name: initial clock server configuration
+  - name: configuracion ntp server
     brocade_time_clock_server:
       credential: "{{credential}}"
       vfid: -1
