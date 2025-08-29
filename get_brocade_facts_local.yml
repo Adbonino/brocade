@@ -20,8 +20,7 @@
         credential: "{{ credential }}"
         vfid: -1
         gather_subset: all
-      register: san_facts
 
     - name: Mostrar facts
       debug:
-        var: san_facts
+        var: ansible_facts
