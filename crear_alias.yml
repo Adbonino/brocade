@@ -1,0 +1,15 @@
+- name: Crear un alias en Brocade G720
+  hosts: all
+  gather_facts: no
+  vars:
+    alias_name: ""
+    alias_wwn: ""
+  tasks:
+    - name: Crear alias con raw
+      raw: alicreate {{ alias_name }},{{ alias_wwn }}
+      register: result
+      failed_when: false
+
+    - name: Mostrar resultado
+      debug:
+        var: result.stdout
