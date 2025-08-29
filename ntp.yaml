@@ -1,0 +1,20 @@
+gather_facts: False
+
+  vars:
+    credential:
+      fos_ip_addr: "{{fos_ip_addr}}"
+      fos_user_name: admin
+      fos_password: xxxx
+      https: False
+
+  tasks:
+
+  - name: initial clock server configuration
+    brocade_time_clock_server:
+      credential: "{{credential}}"
+      vfid: -1
+      clock_server:
+        ntp_server_address:
+          server_address:
+            - "10.38.2.80"
+            - "10.38.2.81"
