@@ -2,13 +2,9 @@
   hosts: brocade_switches
   gather_facts: no
   vars:
-    zona_nombre: "MiZona"
-    zona_miembros:
-      - alias1
-      - alias2
-      - wwn1
-      - wwn2
-
+    zona_nombre: ""
+    zona_miembros: []
+      
   tasks:
     - name: Crear zona con miembros
       raw: >
