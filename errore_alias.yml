@@ -1,0 +1,41 @@
+---
+- name: Crear aliases y registrar fallos
+  hosts: brocade_switches
+  gather_facts: no
+  vars_files:
+    - aliases.yml   # Archivo con variable 'aliases'
+
+  tasks:
+    - name: Intentar crear cada alias
+      raw: alicreate {{ item.name }},{{ item.wwn }}
+      register: resultado_ali
+      ignore_errors: yes
+      loop: "{{ aliases }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Filtrar aliases creados correctamente
+      set_fact:
+        aliases_ok: >-
+          {{ resultado_ali.results
+             | selectattr('rc', 'eq', 0)
+             | map(attribute='item')
+             | list }}
+
+    - name: Filtrar aliases que fallaron al crear
+      set_fact:
+        aliases_fallidos: >-
+          {{ resultado_ali.results
+             | selectattr('rc', 'ne', 0)
+             | map(attribute='item')
+             | list }}
+
+    - name: Guardar aliases fallidos en un archivo
+      copy:
+        dest: "./aliases_fallidos.yml"
+        content: |
+          aliases:
+          {% for alias in aliases_fallidos %}
+            - name: {{ alias.name }}
+              wwn: {{ alias.wwn }}
+          {% endfor %}
