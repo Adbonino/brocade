@@ -1,0 +1,14 @@
+- name: Crear múltiples aliases llamando playbook individual
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - aliases.yml
+
+  tasks:
+    - name: Crear aliases uno por uno
+      ansible.builtin.include_playbook:
+        file: crear_alias.yml
+      vars:
+        alias_name: "{{ item.name }}"
+        alias_wwn: "{{ item.wwn }}"
+      loop: "{{ aliases }}"
