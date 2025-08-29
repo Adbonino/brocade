@@ -1,0 +1,35 @@
+- name: Agregar nuevas zonas a configuración activa Brocade
+  hosts: brocade_switches
+  gather_facts: no
+  vars_files:
+    - zones.yml
+
+  vars:
+    config_nombre: mi_config   # Ya existente
+
+  tasks:
+    - name: Obtener zonas ya configuradas
+      raw: cfgshow
+      register: cfgshow_raw
+
+    - name: Extraer zonas existentes
+      set_fact:
+        zonas_existentes: "{{ cfgshow_raw.stdout | regex_findall('zone: ([^\\n]+)') }}"
+
+    - name: Filtrar zonas que no existen aún
+      set_fact:
+        zonas_para_crear: "{{ zones | rejectattr('name', 'in', zonas_existentes) | list }}"
+
+    - name: Crear zonas nuevas
+      raw: >
+        zonecreate {{ item.name }},{{ item.members | join(';') }}
+      loop: "{{ zonas_para_crear }}"
+      ignore_errors: yes
+
+    - name: Agregar zonas a la configuración existente
+      raw: cfgadd {{ config_nombre }},{{ item.name }}
+      loop: "{{ zonas_para_crear }}"
+
+    - name: Activar la configuración (por si es necesario)
+      raw: cfgenable {{ config_nombre }}
+
