@@ -8,6 +8,7 @@
     - name: Agregar la clave del host a Known_hosts
       shell: ssh-keyscan -H {{ ansible_hosts }} >> ~/.ssh/known_hosts
       delegate_to: localhost
+      ignore_errors: yes
    
     - name: Crear alias con raw
       raw: alicreate {{ alias_name }},{{ alias_wwn }}
