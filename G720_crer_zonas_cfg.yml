@@ -2,7 +2,7 @@
   hosts: all
   gather_facts: no
   vars_files:
-    - zones_new.yml
+    - ./datos/zones_new.yml
 
   tasks:
 
