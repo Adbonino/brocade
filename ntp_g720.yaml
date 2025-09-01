@@ -1,5 +1,5 @@
 - name: Configurar servidor NTP en Brocade G720
-  hosts: brocade_switches
+  hosts: all
   gather_facts: no
   vars:
     ntp_server: 
