@@ -2,7 +2,7 @@
   hosts: all
   gather_facts: no
   vars:
-    ntp_server: 
+    ntp_servers: 
       - "10.82.8.110"  # Reemplazar por la ip de tu servidor
       - "10.82.8.111"  # Reemplazar por la ip de tu servidor
     timezone: "America/Asuncion"  # Cambiá esto por la zona que necesites (ver lista con tsTimeZone --list) America/Argentina/Buenos_Aires
@@ -16,7 +16,7 @@
     - name: Asegurar que la IP esté en known_hosts
       ansible.builtin.known_hosts:
         name: "{{ ansible_host }}"
-        key: "{{ lookup('pipe', 'ssh-keyscan -H ' + ip) }}"
+        key: "{{ lookup('pipe', 'ssh-keyscan -H ' + ansible_host) }}"
         path: "~/.ssh/known_hosts"
       delegate_to: localhost
     
