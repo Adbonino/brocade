@@ -6,6 +6,17 @@
 
   tasks:
 
+    # - name: Agregar la clave del host a Known_hosts
+    #   shell: ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts
+    #   delegate_to: localhost
+
+    - name: Asegurar que la IP esté en known_hosts
+      ansible.builtin.known_hosts:
+        name: "{{ ansible_host }}"
+        key: "{{ lookup('pipe', 'ssh-keyscan -H ' + ansible_host) }}"
+        path: "~/.ssh/known_hosts"
+      delegate_to: localhost
+
     - name: Crear zonas nuevas (si no existen)
       loop: "{{ zones }}"
       loop_control:
