@@ -4,13 +4,20 @@
   vars:
     ntp_server: 
       - "10.82.8.110"  # Reemplazar por la ip de tu servidor
-      - "10.82.8.111"
+      - "10.82.8.111"  # Reemplazar por la ip de tu servidor
     timezone: "America/Asuncion"  # Cambiá esto por la zona que necesites (ver lista con tsTimeZone --list) America/Argentina/Buenos_Aires
 
   tasks:
 
-    - name: Agregar la clave del host a Known_hosts
-      shell: ssh-keyscan -H {{ ansible_hosts }} >> ~/.ssh/known_hosts
+    # - name: Agregar la clave del host a Known_hosts
+    #   shell: ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts
+    #   delegate_to: localhost
+
+    - name: Asegurar que la IP esté en known_hosts
+      ansible.builtin.known_hosts:
+        name: "{{ ansible_host }}"
+        key: "{{ lookup('pipe', 'ssh-keyscan -H ' + ip) }}"
+        path: "~/.ssh/known_hosts"
       delegate_to: localhost
     
     - name: Configurar servidor NTP con sclockserver
