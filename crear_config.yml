@@ -7,6 +7,10 @@
     config_nombre: mi_config
 
   tasks:
+    - name: Agregar la clave del host a Known_hosts
+        shell: ssh-keyscan -H {{ ansible_hosts }} >> ~/.ssh/known_hosts
+      delegate_to: localhost
+      
     - name: Crear zonas iniciales
       raw: >
         zonecreate {{ item.name }},{{ item.members | join(';') }}
