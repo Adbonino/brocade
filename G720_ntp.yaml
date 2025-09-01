@@ -21,7 +21,7 @@
       delegate_to: localhost
     
     - name: Configurar servidor NTP con sclockserver
-      raw: sclockserver {{ ntp_server }}
+      raw: sclockserver {{ item }}
       loop: "{{ ntp_servers }}"
       failed_when: false
       register: ntp_output
