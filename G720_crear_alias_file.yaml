@@ -2,7 +2,7 @@
   hosts: all
   gather_facts: no
   vars_files:
-    - alias_new.yml  # Archivo con la lista de aliases
+    - ./datos/alias_new.yml  # Archivo con la lista de aliases
 
   tasks:
 
