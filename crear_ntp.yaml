@@ -6,6 +6,7 @@
   tasks:
     - name: Configurar servidor NTP con sclockserver
       ansible.builtin.shell: sclockserver {{ ntp_server }}
+      failed_when: false
       register: ntp_output
 
     - name: Mostrar salida
