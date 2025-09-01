@@ -8,6 +8,11 @@
     timezone: "America/Asuncion"  # Cambiá esto por la zona que necesites (ver lista con tsTimeZone --list) America/Argentina/Buenos_Aires
 
   tasks:
+
+    - name: Agregar la clave del host a Known_hosts
+      shell: ssh-keyscan -H {{ ansible_hosts }} >> ~/.ssh/known_hosts
+      delegate_to: localhost
+    
     - name: Configurar servidor NTP con sclockserver
       raw: sclockserver {{ ntp_server }}
       loop: "{{ ntp_servers }}"
