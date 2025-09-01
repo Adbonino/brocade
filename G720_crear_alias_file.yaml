@@ -6,6 +6,17 @@
 
   tasks:
 
+    # - name: Agregar la clave del host a Known_hosts
+    #   shell: ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts
+    #   delegate_to: localhost
+
+    - name: Asegurar que la IP esté en known_hosts
+      ansible.builtin.known_hosts:
+        name: "{{ ansible_host }}"
+        key: "{{ lookup('pipe', 'ssh-keyscan -H ' + ansible_host) }}"
+        path: "~/.ssh/known_hosts"
+      delegate_to: localhost
+
     - name: Filtrar aliases únicos por nombre
       set_fact:
         aliases_unicos: "{{ aliases | unique(attribute='name') }}"
@@ -24,7 +35,7 @@
         - name: Ejecutar alicreate con raw
           raw: alicreate {{ item.name }},{{ item.wwn }}
           register: result
-          # failed_when: false  # Nunca falla el task, sigue con el siguiente alias
+          failed_when: false  
 
         - name: Mostrar resultado
           debug:
