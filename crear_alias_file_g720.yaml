@@ -9,17 +9,17 @@
     - name: Filtrar aliases únicos por nombre
       set_fact:
         aliases_unicos: "{{ aliases | unique(attribute='name') }}"
+        
+    - name: Agregar clave SSH a known_hosts (si no está)
+          shell: ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts
+          delegate_to: localhost
+          ignore_errors: yes
 
     - name: Crear alias en el switch uno por uno
       loop: "{{ aliases_unicos }}"
       loop_control:
         label: "{{ item.name }}"
       block:
-
-        - name: Agregar clave SSH a known_hosts (si no está)
-          shell: ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts
-          delegate_to: localhost
-          ignore_errors: yes
 
         - name: Ejecutar alicreate con raw
           raw: alicreate {{ item.name }},{{ item.wwn }}
