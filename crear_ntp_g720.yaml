@@ -1,0 +1,28 @@
+- name: Configurar servidor NTP en Brocade G720
+  hosts: brocade_switches
+  gather_facts: no
+  vars:
+    ntp_server: 
+      - "10.82.8.110"  # Reemplazar por la ip de tu servidor
+      - "10.82.8.111"
+    timezone: "America/Asuncion"  # Cambiá esto por la zona que necesites (ver lista con tsTimeZone --list) America/Argentina/Buenos_Aires
+
+  tasks:
+    - name: Configurar servidor NTP con sclockserver
+      raw: sclockserver {{ ntp_server }}
+      loop: "{{ ntp_servers }}"
+      failed_when: false
+      register: ntp_output
+
+    - name: Mostrar salida
+      ansible.builtin.debug:
+        var: ntp_output.stdout
+
+    - name: Configurar zona horaria con tsTimeZone
+      raw: tsTimeZone {{ timezone }}
+      register: timezone_output
+      failed_when: false
+      
+    - name: Mostrar salida (opcional)
+      ansible.builtin.debug:
+        var: timezone_output.stdout
