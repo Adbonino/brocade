@@ -28,7 +28,7 @@
 
     - name: Mostrar salida
       ansible.builtin.debug:
-        var: ntp_output.stdout
+        var: ntp_output.results
 
     - name: Configurar zona horaria con tsTimeZone
       raw: tsTimeZone {{ timezone }}
