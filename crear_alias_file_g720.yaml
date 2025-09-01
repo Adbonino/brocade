@@ -24,7 +24,7 @@
         - name: Ejecutar alicreate con raw
           raw: alicreate {{ item.name }},{{ item.wwn }}
           register: result
-          failed_when: false  # Nunca falla el task, sigue con el siguiente alias
+          # failed_when: false  # Nunca falla el task, sigue con el siguiente alias
 
         - name: Mostrar resultado
           debug:
