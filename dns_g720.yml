@@ -1,0 +1,21 @@
+- name: Configurar servidores DNS en Brocade G720
+  hosts: all
+  gather_facts: no
+  vars:
+    dns_servers:
+      - "8.8.8.8"
+      - "8.8.4.4"
+
+  tasks:
+
+    - name: Agregar servidores DNS
+      raw: dnsconfig --add {{ item }}
+      loop: "{{ dns_servers }}"
+      register: dns_add_result
+      changed_when: false
+      failed_when: false
+
+    - name: Mostrar salida (opcional)
+      debug:
+        var: dns_add_result.results
+
