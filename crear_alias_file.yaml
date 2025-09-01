@@ -1,0 +1,36 @@
+- name: Crear múltiples aliases en Brocade G720
+  hosts: all
+  gather_facts: no
+  vars_files:
+    - aliases.yml  # Archivo con la lista de aliases
+
+  tasks:
+
+    - name: Filtrar aliases únicos por nombre
+      set_fact:
+        aliases_unicos: "{{ aliases | unique(attribute='name') }}"
+
+    - name: Crear alias en el switch uno por uno
+      loop: "{{ aliases_unicos }}"
+      loop_control:
+        label: "{{ item.name }}"
+      block:
+
+        - name: Agregar clave SSH a known_hosts (si no está)
+          shell: ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts
+          delegate_to: localhost
+          ignore_errors: yes
+
+        - name: Ejecutar alicreate con raw
+          raw: alicreate {{ item.name }},{{ item.wwn }}
+          register: result
+          failed_when: false  # Nunca falla el task, sigue con el siguiente alias
+
+        - name: Mostrar resultado
+          debug:
+            msg: "Alias {{ item.name }} creado: {{ result.stdout }}"
+      
+      rescue:
+        - name: Avisar si hubo error creando el alias
+          debug:
+            msg: "Hubo un error al crear el alias {{ item.name }} — Continuando..."
