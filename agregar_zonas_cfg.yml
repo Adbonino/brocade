@@ -1,0 +1,44 @@
+- name: Agregar zonas a configuración existente en Brocade G720
+  hosts: all
+  gather_facts: no
+  vars_files:
+    - zones_new.yml  # Archivo con las zonas y sus miembros
+
+  tasks:
+
+    - name: Crear zonas nuevas (si no existen)
+      loop: "{{ zones }}"
+      loop_control:
+        label: "{{ item.name }}"
+      block:
+        - name: Crear zona
+          raw: >
+            zonecreate {{ item.name }},{{ item.members | join(',') }}
+          register: zonecreate_result
+          failed_when: false
+
+        - name: Mostrar resultado de creación zona
+          debug:
+            msg: "Zona {{ item.name }}: {{ zonecreate_result.stdout }}"
+
+    - name: Agregar cada zona a la configuración cfg1
+      loop: "{{ zones }}"
+      loop_control:
+        label: "{{ item.name }}"
+      raw: cfgadd "cfg1", "{{ item.name }}"
+      register: cfgadd_result
+      failed_when: false
+
+    - name: Guardar configuración
+      raw: cfgsave
+      register: cfgsave_result
+      failed_when: false
+
+    - name: Activar configuración cfg1
+      raw: cfgenable "cfg1"
+      register: cfgenable_result
+      failed_when: false
+
+    - name: Mostrar resultado activación configuración
+      debug:
+        msg: "{{ cfgenable_result.stdout }}"
