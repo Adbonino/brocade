@@ -3,13 +3,7 @@
   gather_facts: no
   vars_files:
     - aliases.yml
-  #  Formato esperado del archivo de alias
-  #  aliases:
-  #    - name:   AIX72_ORCLX_DESA_v1_fcs4   
-  #      wwn:    c0:50:76:0a:43:62:00:b2
-  #    - name:   AIX72_ORCLX_DESA_v2_fcs4   
-  #      wwn:    c0:50:76:0a:43:62:00:b4
-
+    
   tasks:
   
     # filtro el archivo de entrada para evitar duplicados 
@@ -20,28 +14,8 @@
     # consulto al SW el listado de alias configurados
     - name: Obtener aliases existentes
       raw: aliasshow
-      register: aliases_actuales_raw
-
-    # extraer nombres de alias existentes
-    - name: Crear múltiples aliases llamando playbook individual
-  hosts: localhost
-  gather_facts: no
-  vars_files:
-    - aliases.yml
-  #  Formato esperado del archivo de alias
-  #  aliases:
-  #    - name:   AIX72_ORCLX_DESA_v1_fcs4   
-  #      wwn:    c0:50:76:0a:43:62:00:b2
-  #    - name:   AIX72_ORCLX_DESA_v2_fcs4   
-  #      wwn:    c0:50:76:0a:43:62:00:b4
-
-  tasks:
-  
-    # filtro el archivo de entrada para evitar duplicados 
-    - name: Filtrar aliases únicos por nombre
-      set_fact:
-        aliases_unicos: "{{ aliases | unique(attribute='name') }}"
-    
+      register: aliases_actuales_raw    
+   
     # consulto al SW el listado de alias configurados
     - name: Obtener aliases existentes
       raw: aliasshow
