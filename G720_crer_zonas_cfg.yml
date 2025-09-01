@@ -6,6 +6,17 @@
 
   tasks:
 
+    # - name: Agregar la clave del host a Known_hosts
+    #   shell: ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts
+    #   delegate_to: localhost
+
+    - name: Asegurar que la IP esté en known_hosts
+      ansible.builtin.known_hosts:
+        name: "{{ ansible_host }}"
+        key: "{{ lookup('pipe', 'ssh-keyscan -H ' + ansible_host) }}"
+        path: "~/.ssh/known_hosts"
+      delegate_to: localhost
+
     - name: Crear cada zona con sus miembros 
       loop: "{{ zones }}"
       loop_control:
@@ -23,9 +34,10 @@
 
     - name: Crear configuración cfg1 con todas las zonas
       raw: >
-        cfgcreate "cfg1", "{{ zones | map(attribute='name') | join(',') }}"
+        cfgcreate cfg1,{{ zones | map(attribute='name') | join(',') }}
       register: cfgcreate_result
       failed_when: false
+      changed_when: false
 
     - name: Guardar configuración
       raw: cfgsave
