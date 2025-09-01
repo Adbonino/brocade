@@ -2,7 +2,7 @@
   hosts: all
   gather_facts: no
   vars_files:
-    - zones_new.yml  # Archivo con las zonas y sus miembros
+    - ./datos/zonas_new.yml  # Archivo con las zonas y sus miembros
 
   tasks:
 
