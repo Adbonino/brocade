@@ -2,7 +2,7 @@
   hosts: all
   gather_facts: no
   vars_files:
-    - ./datos/alias_new.yml  # Archivo con la lista de aliases
+    - ./datos/alias_iniciales.yml  # Archivo con la lista de aliases
 
   tasks:
 
@@ -21,10 +21,10 @@
       set_fact:
         aliases_unicos: "{{ aliases | unique(attribute='name') }}"
         
-    - name: Agregar clave SSH a known_hosts (si no está)
-      shell: ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts
-      delegate_to: localhost
-      ignore_errors: yes
+    # - name: Agregar clave SSH a known_hosts (si no está)
+    #   shell: ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts
+    #   delegate_to: localhost
+    #   ignore_errors: yes
 
     - name: Crear alias en el switch uno por uno
       loop: "{{ aliases_unicos }}"
