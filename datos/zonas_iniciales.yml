@@ -1,3 +1,4 @@
+zones:   
   - name:   AIX72_ORCLX_DESA_v1_fcs4_V7200    
     members:   
       - AIX72_ORCLX_DESA_v1_fcs4      
