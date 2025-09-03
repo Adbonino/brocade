@@ -343,4 +343,71 @@ aliases:
     wwn:    10:00:5c:ba:2c:fb:09:c4
   - name:   veeam_bkpPXY2_hba2   
     wwn:    10:00:5c:ba:2c:fb:09:d9
+  - name:   ARCSERVER_P1   
+    wwn:    21:00:f4:e9:d4:f5:47:a0
+  - name:   Desa_VIOS1_fcs0_1   
+    wwn:    c0:50:76:0a:43:62:00:5c
+  - name:   HML_VIOS1_fcs0   
+    wwn:    c0:50:76:0a:43:62:00:6a
+  - name:   HP_MSA_2040_P2   
+    wwn:    20:70:00:c0:ff:27:0a:32
+  - name:   NETBKP_HBA_P2   
+    wwn:    50:01:43:80:06:37:df:04
+  - name:   PRD_TAPE_P2_C4_T1   
+    wwn:    10:00:00:90:fa:d6:58:dc
+  - name:   TAPECONTI_TS4300DRIVE2   
+    wwn:    50:00:e1:11:72:35:c0:66
+  - name:   TAPE_TS3200_PROD_DRIVE1   
+    wwn:    20:02:00:0e:11:12:ce:70
+  - name:   V7000F_N1_PORT1   
+    wwn:    50:05:07:68:0b:21:c1:0f
+  - name:   V7000F_N2_PORT1   
+    wwn:    50:05:07:68:0b:21:c1:0e
+  - name:   V7000F_N2_PORT3   
+    wwn:    50:05:07:68:0b:23:c1:0e
+  - name:   VEEAN_CONTI_P1   
+    wwn:    20:00:08:f1:ea:bf:bf:99
+  - name:   VIOS_1_P1_C2_T1   
+    wwn:    10:00:00:10:9b:23:97:f7
+  - name:   esx50_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:57:94
+  - name:   esx50_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:57:9a
+  - name:   esx51_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:58:4b
+  - name:   esx51_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:58:51
+  - name:   esx55_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:5d:4c
+  - name:   esx55_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:5d:52
+  - name:   esx56_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:5e:03
+  - name:   esx56_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:5e:09
+  - name:   esx57_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:5e:ba
+  - name:   esx57_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:5e:c0
+  - name:   esx58_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:5b:27
+  - name:   esx58_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:5b:2d
+  - name:   esx60_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:61:96
+  - name:   esx60_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:61:9c
+  - name:   esx63_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:62:4d
+  - name:   esx63_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:62:53
+  - name:   esx64_vmhba67   
+    wwn:    20:01:40:5c:fd:7c:5f:71
+  - name:   esx64_vmhba71   
+    wwn:    20:01:40:5c:fd:7c:5f:77
+  - name:   veeam_bkp_hba1   
+    wwn:    20:00:08:f1:ea:ba:35:9f
+  - name:   veeam_bkp_hba2   
+    wwn:    20:00:08:f1:ea:bf:ef:54
+
 
