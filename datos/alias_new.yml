@@ -1,10 +1,4 @@
 aliases:
-  - name:   AIX72_ORCLX_DESA_v1_fcs4   
-    wwn:    c0:50:76:0a:43:62:00:b2
-  - name:   AIX72_ORCLX_DESA_v2_fcs4   
-    wwn:    c0:50:76:0a:43:62:00:b4
-  - name:   AIX73_DELFOS_DESA_v1_fcs1   
-    wwn:    c0:50:76:0b:c3:a3:00:24
   - name:   AIX73_DELFOS_DESA_v2_fcs1  
     wwn:    c0:50:76:0b:c3:a3:00:26
   - name:   AIX73_DWH_HML_v1_fcs1   
@@ -349,3 +343,4 @@ aliases:
     wwn:    10:00:5c:ba:2c:fb:09:c4
   - name:   veeam_bkpPXY2_hba2   
     wwn:    10:00:5c:ba:2c:fb:09:d9
+
