@@ -1,6 +1,10 @@
 - name: Crear configuración y zonas en Brocade G720
   hosts: all
   gather_facts: no
+
+  vars:
+    config_name: FABRIC_D
+  
   vars_files:
     - ./datos/zones_new.yml
 
@@ -34,7 +38,7 @@
 
     - name: Crear configuración cfg1 con todas las zonas
       raw: >
-        cfgcreate cfg1,{{ zones | map(attribute='name') | join(',') }}
+        cfgcreate  {{ config_name }},{{ zones | map(attribute='name') | join(',') }}
       register: cfgcreate_result
       failed_when: false
       changed_when: false
