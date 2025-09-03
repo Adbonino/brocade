@@ -1,6 +1,10 @@
 - name: Agregar zonas a configuración existente en Brocade G720
   hosts: all
   gather_facts: no
+
+  vars:
+    config_name: FABRIC_D  
+  
   vars_files:
     - ./datos/zonas_new.yml  # Archivo con las zonas y sus miembros
 
@@ -36,7 +40,7 @@
       loop: "{{ zones }}"
       loop_control:
         label: "{{ item.name }}"
-      raw: cfgadd "cfg1", "{{ item.name }}"
+      raw: cfgadd  {{ config_name }}, "{{ item.name }}"
       register: cfgadd_result
       failed_when: false
 
@@ -46,7 +50,7 @@
       failed_when: false
 
     - name: Activar configuración cfg1
-      raw: cfgenable "cfg1"
+      raw: cfgenable "{{ config_name }}"
       register: cfgenable_result
       failed_when: false
 
