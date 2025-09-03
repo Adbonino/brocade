@@ -49,5 +49,5 @@
       failed_when: false
 
     - name: Activar configuración cfg1
-      raw: cfgenable "cfg1"
+      raw: cfgenable "{{ config_name }}"
       register: cfgenable_result
