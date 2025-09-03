@@ -1,0 +1,43 @@
+- name: Crear múltiples aliases en Brocade G720
+  hosts: all
+  gather_facts: no
+  vars_files:
+    - ./datos/alias_iniciales.yml
+
+  tasks:
+
+    - name: Asegurar que la IP esté en known_hosts
+      ansible.builtin.known_hosts:
+        name: "{{ ansible_host }}"
+        key: "{{ lookup('pipe', 'ssh-keyscan -H ' + ansible_host) }}"
+        path: "~/.ssh/known_hosts"
+      delegate_to: localhost
+
+    - name: Filtrar aliases únicos por nombre
+      set_fact:
+        aliases_unicos: "{{ aliases | unique(attribute='name') }}"
+
+    - name: Ejecutar alicreate con raw
+      raw: alicreate {{ item.name }},{{ item.wwn }}
+      register: result
+      failed_when: false
+      loop: "{{ aliases_unicos }}"
+      loop_control:
+        label: "{{ item.name }}"
+      vars:
+        ansible_shell_type: sh  # necesario en algunos entornos para raw
+
+    - name: Mostrar resultado
+      debug:
+        msg: "Alias {{ item.name }} creado: {{ result.results[loop.index0].stdout }}"
+      loop: "{{ aliases_unicos }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Avisar si hubo error creando el alias
+      when: result.results[loop.index0].failed
+      debug:
+        msg: "Hubo un error al crear el alias {{ item.name }} — Continuando..."
+      loop: "{{ aliases_unicos }}"
+      loop_control:
+        label: "{{ item.name }}"
