@@ -1,0 +1,16 @@
+- name: Ejecutar cfgsave en Brocade G720
+  hosts: localhost
+  gather_facts: no
+  vars:
+    brocade_ip: "192.168.1.100"
+    brocade_user: "admin"
+    brocade_pass: "passw0rd"
+
+  tasks:
+    - name: Ejecutar script Python pasando IP, usuario y clave
+      script: scripts/ejecutar_cfgsave.py {{ brocade_ip }} {{ brocade_user }} {{ brocade_pass }}
+      register: resultado
+
+    - name: Mostrar salida del script
+      debug:
+        var: resultado.stdout
