@@ -3,7 +3,7 @@ import paramiko
 import time
 
 # Configuración de conexión
-host = "192.168.1.100"     # Cambia por IP real del switch
+host = "10.82.1.90"     # Cambia por IP real del switch
 usuario = "admin"
 clave = "passw0rd"
 
