@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
     - name: Ejecutar script Python local
-      script: scripts/ejecutar_cfgsave.py
+      script: ./tools/cfgsave.py
       register: resultado
 
     - name: Mostrar resultado del comando
