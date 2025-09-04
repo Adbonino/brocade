@@ -1,0 +1,11 @@
+- name: Ejecutar cfgsave en Brocade G720 con confirmación
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Ejecutar script Python local
+      script: scripts/ejecutar_cfgsave.py
+      register: resultado
+
+    - name: Mostrar resultado del comando
+      debug:
+        var: resultado.stdout
